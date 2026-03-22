@@ -86,4 +86,58 @@ This is the place for you to write reflections:
 
 #### Reflection Subscriber-1
 
+1. RwLock<> digunakan karena dalam kasus ini kita memiliki lebih banyak operasi baca (read) dibandingkan operasi tulis (write).
+
+-RwLock<> memungkinkan:
+Banyak thread membaca secara bersamaan (concurrent read) 
+Tapi hanya satu thread yang boleh menulis (write) 
+
+Sedangkan Mutex<>:
+
+Hanya mengizinkan satu thread mengakses data dalam satu waktu, baik read maupun write 
+Kenapa RwLock<> lebih cocok?
+
+Pada NotificationRepository:
+
+-Fungsi seperti list_all_as_string() → read
+-Fungsi seperti add() → write
+
+Karena read jauh lebih sering terjadi:
+
+-RwLock<> → lebih efisien dan scalable
+-Mutex<> → akan jadi bottleneck karena semua akses harus antri
+
+Kesimpulan:
+-Gunakan RwLock<> jika:
+Banyak read, sedikit write
+
+-Gunakan Mutex<> jika:
+Akses sederhana atau write sering terjadi
+
+2. Di Rust:
+
+static variable harus immutable (tidak bisa diubah langsung) 
+Ini karena Rust sangat ketat soal:
+Memory safety
+Thread safety (data race prevention)
+
+-Rust tidak mengizinkan mutable static secara langsung, karena:
+
+Mutable global variable sangat berisiko menyebabkan:
+Data race
+Undefined behavior
+Rust mencegah ini sejak compile time
+Peran lazy_static
+
+-lazy_static memungkinkan:
+Inisialisasi variable secara runtime (lazy initialization)
+Tetap bisa dipakai seperti static
+Tapi tetap aman karena dibungkus dengan:
+RwLock / Mutex
+
+Jadi: 
+-Rust tidak melarang global state, tapi harus safe dan terkontrol
+-Java lebih fleksibel, tapi lebih rawan error di runtime
+-Rust lebih ketat, tapi mencegah bug sejak awal
+
 #### Reflection Subscriber-2
