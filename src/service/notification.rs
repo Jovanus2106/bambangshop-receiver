@@ -111,4 +111,8 @@ pub fn unsubscribe(product_type: &str) -> Result<SubscriberRequest> {
         .join()
         .unwrap();
 }
+pub fn receive_notification(payload: Notification) -> Result<Notification> {
+    let subscriber_result: Notification = NotificationRepository::add(payload);
+    return Ok(subscriber_result);
+}
 }
