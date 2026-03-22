@@ -5,7 +5,7 @@ use rocket::log;
 use rocket::serde::json::to_string;
 use rocket::tokio;
 
-use bambangshop_receiver::{APP_CONFIG, REQUEST_CLIENT, Result, compose_error_response};
+use bambangshop_receiver::{APP_CONFIG, REQWEST_CLIENT, Result, compose_error_response};
 use crate::model::notification::Notification;
 use crate::model::subscriber::SubscriberRequest;
 use crate::repository::notification::NotificationRepository;
@@ -31,7 +31,7 @@ impl NotificationService {
             APP_CONFIG.get_publisher_root_url(), product_type_str
         );
 
-        let request = REQUEST_CLIENT
+        let request = REQWEST_CLIENT
             .post(request_url.clone())
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
@@ -82,7 +82,7 @@ impl NotificationService {
             notification_receiver_url
         );
 
-        let request = REQUEST_CLIENT
+        let request = REQWEST_CLIENT
             .post(request_url.clone())
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
