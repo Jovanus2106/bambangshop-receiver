@@ -141,3 +141,9 @@ Jadi:
 -Rust lebih ketat, tapi mencegah bug sejak awal
 
 #### Reflection Subscriber-2
+
+1.Sejujurnya saya sempat melihat beberapa bagian di luar step tutorial, seperti src/lib.rs, walaupun tidak terlalu dalam. Dari situ saya jadi lebih ngerti bagaimana struktur project ini dibangun, terutama pembagian antara controller, service, dan repository. Selain itu, saya juga jadi paham kalau ada bagian konfigurasi yang mengatur jalannya aplikasi secara keseluruhan, bukan cuma endpoint saja. Ini membantu saya melihat gambaran besar dari sistemnya, bukan hanya mengikuti step.
+
+2.Setelah saya coba menjalankan beberapa instance Receiver (8001, 8002, 8003), saya merasa Observer pattern ini sangat membantu. Untuk menambah subscriber, kita tidak perlu mengubah kode di publisher, cukup subscribe saja, dan nanti otomatis akan menerima notifikasi sesuai product type. Jadi memang scalable di sisi subscriber.Tapi kalau untuk menambah lebih dari satu Main app (publisher), menurut saya tidak semudah itu. Soalnya setiap publisher harus tahu daftar subscriber, dan kalau tidak ada sistem yang menyinkronkan data tersebut, bisa jadi tidak konsisten. Jadi untuk subscriber mudah ditambah, tapi untuk publisher perlu desain tambahan supaya tetap sinkron.
+
+3.Saya mencoba menggunakan Postman untuk testing endpoint seperti subscribe dan create product. Menurut saya ini cukup membantu karena saya bisa langsung melihat apakah sistemnya berjalan atau tidak, terutama untuk memastikan notifikasi benar-benar dikirim ke receiver. Selain itu, dokumentasi di Postman juga cukup berguna, apalagi kalau dipakai di project kelompok. Jadi semua orang bisa pakai endpoint yang sama tanpa harus coba-coba sendiri. Menurut saya ini akan sangat membantu juga nanti untuk project yang lebih besar.
